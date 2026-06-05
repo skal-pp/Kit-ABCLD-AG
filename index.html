@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Matrice de Scénarisation ABC Learning Design & ICAP</title>
+  <!-- Google Fonts: Outfit & Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- Lucide Icons (CDN) pour des icônes élégantes -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- CSS Principal -->
+  <link rel="stylesheet" href="src/style.css">
+</head>
+<body class="theme-light">
+  <!-- Application Container -->
+  <div class="app-container">
+    
+    <!-- Top Header -->
+    <header class="app-header">
+      <div class="header-logo">
+        <div class="logo-icon">ABC</div>
+        <div class="logo-text">
+          <h1>Matrice de Scénarisation</h1>
+          <p>Méthodologie ABC Learning Design & Modèle ICAP</p>
+        </div>
+      </div>
+      <div class="header-controls">
+        <!-- Bouton Mode d'emploi -->
+        <button id="guide-btn" class="btn-secondary">
+          <i data-lucide="help-circle"></i> Mode d'emploi
+        </button>
+        <!-- Thème Toggle -->
+        <button id="theme-toggle" class="btn-icon" title="Changer de thème">
+          <i data-lucide="moon"></i>
+        </button>
+        <!-- Modèles prédéfinis -->
+        <div class="dropdown">
+          <button id="templates-btn" class="btn-secondary">
+            <i data-lucide="layout-template"></i> Modèles <i data-lucide="chevron-down" class="chevron"></i>
+          </button>
+          <div class="dropdown-content" id="templates-dropdown">
+            <a href="#" data-template="flipped">Classe Inversée</a>
+            <a href="#" data-template="mooc">MOOC Classique</a>
+            <a href="#" data-template="project">Apprentissage par Projet</a>
+            <a href="#" data-template="hybrid">Hybride Équilibré</a>
+            <hr>
+            <a href="#" data-template="empty" class="text-danger">Effacer & Réinitialiser</a>
+          </div>
+        </div>
+        <!-- Actions Fichiers -->
+        <button id="import-btn" class="btn-secondary">
+          <i data-lucide="upload"></i> Importer JSON
+        </button>
+        <button id="export-btn" class="btn-primary">
+          <i data-lucide="download"></i> Exporter JSON
+        </button>
+        <button id="print-btn" class="btn-accent">
+          <i data-lucide="printer"></i> PDF / Imprimer
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Workspace -->
+    <main class="app-main">
+      
+      <!-- Left Column: Course Metadata & Storyboard -->
+      <section class="storyboard-section">
+        
+        <!-- Course Metadata Box -->
+        <div class="course-metadata card-panel">
+          <div class="card-header-toggle">
+            <h2><i data-lucide="info"></i> Description de la formation</h2>
+            <button id="toggle-metadata" class="btn-icon-small"><i data-lucide="chevron-up"></i></button>
+          </div>
+          <div class="metadata-grid" id="metadata-form">
+            <!-- Row 1: Quick info -->
+            <div class="form-group">
+              <label for="course-title">Nom de la formation</label>
+              <input type="text" id="course-title" placeholder="Ex: Master MEEF - Option Numérique" value="Mon Cours ABC">
+            </div>
+            <div class="form-group">
+              <label for="course-code">Code / Référence</label>
+              <input type="text" id="course-code" placeholder="Ex: M1-NUM" value="ABC-01">
+            </div>
+            <div class="form-group">
+              <label for="course-discipline">Thématique ou discipline</label>
+              <input type="text" id="course-discipline" placeholder="Ex: Numérique éducatif, Sciences...">
+            </div>
+            <div class="form-group">
+              <label>Volume horaire total (calculé)</label>
+              <div class="calculated-value-box" id="course-calculated-hours">0h00</div>
+            </div>
+
+            <!-- Two-column Textareas Grid -->
+            <div class="form-group half-width">
+              <label for="course-obj-generaux">Objectifs généraux</label>
+              <textarea id="course-obj-generaux" rows="2" placeholder="Saisir les objectifs globaux de la formation..."></textarea>
+            </div>
+            <div class="form-group half-width">
+              <label for="course-obj-pedag">Objectifs pédagogiques</label>
+              <textarea id="course-obj-pedag" rows="2" placeholder="Saisir les objectifs d'apprentissage opérationnels..."></textarea>
+            </div>
+
+            <div class="form-group half-width">
+              <label for="course-contexte">Contexte</label>
+              <textarea id="course-contexte" rows="2" placeholder="Expliquez le contexte institutionnel ou matériel de la formation..."></textarea>
+            </div>
+            <div class="form-group half-width">
+              <label for="course-modalites">Modalités</label>
+              <textarea id="course-modalites" rows="2" placeholder="Ex: Hybride, Présentiel, 100% en ligne..."></textarea>
+            </div>
+
+            <div class="form-group half-width">
+              <label for="course-acteurs">Acteurs du projet</label>
+              <textarea id="course-acteurs" rows="2" placeholder="Nommez les concepteurs, intervenants, tuteurs..."></textarea>
+            </div>
+            <div class="form-group half-width">
+              <label for="course-methodes">Méthodes pédagogiques envisagées</label>
+              <textarea id="course-methodes" rows="2" placeholder="Ex: Pédagogie active, projet, cours inversé..."></textarea>
+            </div>
+
+            <div class="form-group half-width">
+              <label for="course-calendrier">Calendrier prévisionnel</label>
+              <textarea id="course-calendrier" rows="2" placeholder="Dates clés, jalons de la formation..."></textarea>
+            </div>
+            <div class="form-group half-width">
+              <label for="course-ressources">Ressources nécessaires</label>
+              <textarea id="course-ressources" rows="2" placeholder="Matériels, salles, accès plateforme Moodle..."></textarea>
+            </div>
+
+            <div class="form-group half-width">
+              <label for="course-public">Public concerné</label>
+              <textarea id="course-public" rows="2" placeholder="Public visé, pré-requis, niveau..."></textarea>
+            </div>
+            <div class="form-group half-width">
+              <label for="course-productions">Production(s) attendue(s)</label>
+              <textarea id="course-productions" rows="2" placeholder="Livrables attendus de la part des apprenants..."></textarea>
+            </div>
+
+            <div class="form-group full-width">
+              <label for="course-evaluation-desc">Évaluation</label>
+              <textarea id="course-evaluation-desc" rows="2" placeholder="Description des modalités d'évaluation de la formation..."></textarea>
+            </div>
+          </div>
+        </div>
+
+        <!-- Storyboard Board -->
+        <div class="storyboard-board">
+          <div class="board-header">
+            <h2><i data-lucide="kanban"></i> Storyboard Séquentiel</h2>
+            <button id="add-module-btn" class="btn-success">
+              <i data-lucide="plus-circle"></i> Ajouter un Module / Semaine
+            </button>
+          </div>
+
+          <!-- Modules Container -->
+          <div class="modules-container" id="modules-container">
+            <!-- Dynamically populated -->
+          </div>
+        </div>
+      </section>
+
+      <!-- Right Column: Dashboard Analytique -->
+      <aside class="dashboard-sidebar">
+        <div class="sidebar-sticky">
+          <div class="sidebar-header">
+            <h2><i data-lucide="pie-chart"></i> Analyses Pédagogiques</h2>
+          </div>
+
+          <!-- Statistics Panel -->
+          <div class="analytics-panel">
+            
+            <!-- Dynamic Stats Summary -->
+            <div class="stats-summary-grid">
+              <div class="stat-box">
+                <span class="stat-value" id="stat-total-cards">0</span>
+                <span class="stat-label">Activités</span>
+              </div>
+              <div class="stat-box">
+                <span class="stat-value" id="stat-total-duration">0 min</span>
+                <span class="stat-label">Durée Estimée</span>
+              </div>
+            </div>
+
+            <!-- Graphique 1: Radar des 6 types ABC -->
+            <div class="chart-container card-panel">
+              <h3>Profil ABC Learning Design</h3>
+              <div class="chart-wrapper" id="radar-chart-wrapper">
+                <!-- SVG Radar will be injected here -->
+              </div>
+              <div class="chart-legend grid-2-columns" id="abc-legend">
+                <!-- Legend items injected here -->
+              </div>
+            </div>
+
+            <!-- Graphique 2: ICAP Engagement -->
+            <div class="chart-container card-panel">
+              <h3>Engagement Cognitif (ICAP)</h3>
+              <div class="chart-wrapper" id="icap-chart-wrapper">
+                <!-- SVG Bar/Donut will be injected here -->
+              </div>
+              <div class="icap-recommendation" id="icap-level-summary">
+                <!-- Quick text feedback on ICAP balance -->
+              </div>
+            </div>
+
+            <!-- Graphique 3: Modalité & Rythme -->
+            <div class="chart-container card-panel">
+              <h3>Modalités d'Apprentissage</h3>
+              <div class="split-charts">
+                <div class="mini-chart">
+                  <h4>Lieu</h4>
+                  <div class="mini-chart-wrapper" id="modality-chart-wrapper"></div>
+                  <div class="mini-chart-label" id="modality-label">Présentiel vs Distanciel</div>
+                </div>
+                <div class="mini-chart">
+                  <h4>Rythme</h4>
+                  <div class="mini-chart-wrapper" id="rhythm-chart-wrapper"></div>
+                  <div class="mini-chart-label" id="rhythm-label">Synchrone vs Asynchrone</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Pedagogical Recommendations -->
+            <div class="recommendations-box card-panel">
+              <h3><i data-lucide="sparkles" class="text-accent"></i> Conseils Pédagogiques</h3>
+              <div id="recommendations-content" class="recommendations-list">
+                <p class="text-muted">Ajoutez des cartes d'activité pour générer des conseils personnalisés.</p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </aside>
+
+    </main>
+  </div>
+
+  <!-- hidden file input for import -->
+  <input type="file" id="import-file-input" style="display: none;" accept=".json">
+
+  <!-- ==================== MODALS ==================== -->
+  
+  <!-- 1. Card Editor Modal -->
+  <div class="modal-backdrop" id="card-modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 id="card-modal-title">Créer une Activité</h2>
+        <button class="btn-icon close-modal-btn"><i data-lucide="x"></i></button>
+      </div>
+      <div class="modal-body">
+        <form id="card-form">
+          <!-- Card ID (hidden) -->
+          <input type="hidden" id="card-id">
+          <input type="hidden" id="card-module-id">
+
+          <!-- ABC Type Selection (visual cards) -->
+          <div class="form-group full-width">
+            <label>Type d'Apprentissage ABC (Sélectionner un type)</label>
+            <div class="abc-type-selector">
+              <label class="abc-type-option type-acquisition" for="type-acq">
+                <input type="radio" name="abc-type" id="type-acq" value="acquisition" checked>
+                <span class="type-icon"><i data-lucide="book-open"></i></span>
+                <span class="type-name">Acquisition</span>
+                <span class="type-desc">Lire, écouter, regarder</span>
+              </label>
+              
+              <label class="abc-type-option type-investigation" for="type-inv">
+                <input type="radio" name="abc-type" id="type-inv" value="investigation">
+                <span class="type-icon"><i data-lucide="search"></i></span>
+                <span class="type-name">Investigation</span>
+                <span class="type-desc">Explorer, chercher, analyser</span>
+              </label>
+              
+              <label class="abc-type-option type-discussion" for="type-disc">
+                <input type="radio" name="abc-type" id="type-disc" value="discussion">
+                <span class="type-icon"><i data-lucide="messages-square"></i></span>
+                <span class="type-name">Discussion</span>
+                <span class="type-desc">Débattre, questionner, échanger</span>
+              </label>
+              
+              <label class="abc-type-option type-practice" for="type-prac">
+                <input type="radio" name="abc-type" id="type-prac" value="practice">
+                <span class="type-icon"><i data-lucide="edit-3"></i></span>
+                <span class="type-name">Pratique</span>
+                <span class="type-desc">S'exercer, simuler, appliquer</span>
+              </label>
+              
+              <label class="abc-type-option type-collaboration" for="type-coll">
+                <input type="radio" name="abc-type" id="type-coll" value="collaboration">
+                <span class="type-icon"><i data-lucide="users"></i></span>
+                <span class="type-name">Collaboration</span>
+                <span class="type-desc">Co-créer, débattre à plusieurs</span>
+              </label>
+              
+              <label class="abc-type-option type-production" for="type-prod">
+                <input type="radio" name="abc-type" id="type-prod" value="production">
+                <span class="type-icon"><i data-lucide="award"></i></span>
+                <span class="type-name">Production</span>
+                <span class="type-desc">Créer un livrable, synthétiser</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Basic details -->
+          <div class="form-row-2">
+            <div class="form-group">
+              <label for="card-title-input">Titre de l'activité</label>
+              <input type="text" id="card-title-input" required placeholder="Ex: Regarder la vidéo d'introduction">
+            </div>
+            <div class="form-group">
+              <label for="card-duration-input">Durée estimée (minutes)</label>
+              <input type="number" id="card-duration-input" min="1" value="20" required>
+            </div>
+          </div>
+
+          <div class="form-group full-width">
+            <label for="card-desc-input">Description (Consignes de l'activité)</label>
+            <textarea id="card-desc-input" rows="3" placeholder="Décrivez l'activité, les étapes que l'étudiant doit suivre..."></textarea>
+          </div>
+
+          <!-- ICAP Level -->
+          <div class="form-group full-width">
+            <label>Niveau d'Engagement ICAP (Taxonomie de l'engagement cognitif)</label>
+            <div class="icap-selector">
+              <label class="icap-option level-interactive" for="icap-i">
+                <input type="radio" name="icap-level" id="icap-i" value="interactive">
+                <span class="icap-badge">I</span>
+                <div class="icap-option-text">
+                  <strong>Interactif</strong>
+                  <span class="icap-meta">Co-construire avec d'autres (Débat, Projet de groupe)</span>
+                </div>
+              </label>
+              
+              <label class="icap-option level-constructive" for="icap-c">
+                <input type="radio" name="icap-level" id="icap-c" value="constructive">
+                <span class="icap-badge">C</span>
+                <div class="icap-option-text">
+                  <strong>Constructif</strong>
+                  <span class="icap-meta">Produire des idées personnelles (Schéma, Résumé)</span>
+                </div>
+              </label>
+              
+              <label class="icap-option level-active" for="icap-a">
+                <input type="radio" name="icap-level" id="icap-a" value="active">
+                <span class="icap-badge">A</span>
+                <div class="icap-option-text">
+                  <strong>Actif</strong>
+                  <span class="icap-meta">Interagir ou manipuler (Prendre des notes, quiz QCM)</span>
+                </div>
+              </label>
+              
+              <label class="icap-option level-passive" for="icap-p">
+                <input type="radio" name="icap-level" id="icap-p" value="passive" checked>
+                <span class="icap-badge">P</span>
+                <div class="icap-option-text">
+                  <strong>Passif</strong>
+                  <span class="icap-meta">Recevoir des informations (Visionner un cours, lire)</span>
+                </div>
+              </label>
+            </div>
+          </div>
+
+          <!-- Modality, Rhythm, Evaluation -->
+          <div class="form-row-3">
+            <div class="form-group">
+              <label for="card-modality-input">Format</label>
+              <select id="card-modality-input">
+                <option value="presential">Présentiel (Face à face)</option>
+                <option value="distance" selected>Distanciel (En ligne)</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="card-rhythm-input">Rythme</label>
+              <select id="card-rhythm-input">
+                <option value="synchronous">Synchrone (Direct)</option>
+                <option value="asynchronous" selected>Asynchrone (Libre)</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="card-evaluation-input">Évaluation</label>
+              <select id="card-evaluation-input">
+                <option value="none" selected>Aucune évaluation</option>
+                <option value="formative">Évaluation Formative</option>
+                <option value="summative">Évaluation Sommative</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Tools -->
+          <div class="form-group full-width">
+            <label for="card-tools-input">Outils & Plateformes (Séparer par des virgules)</label>
+            <input type="text" id="card-tools-input" placeholder="Ex: Moodle, H5P, Zoom, Papier/Stylo" value="Moodle">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-danger-outline" id="delete-card-btn" style="display: none;">
+          <i data-lucide="trash-2"></i> Supprimer l'activité
+        </button>
+        <div style="flex-grow: 1;"></div>
+        <button class="btn-secondary close-modal-btn">Annuler</button>
+        <button class="btn-primary" id="save-card-btn">Enregistrer</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. Module Editor Modal -->
+  <div class="modal-backdrop" id="module-modal">
+    <div class="modal-content width-small">
+      <div class="modal-header">
+        <h2 id="module-modal-title">Gérer le Module</h2>
+        <button class="btn-icon close-modal-btn"><i data-lucide="x"></i></button>
+      </div>
+      <div class="modal-body">
+        <form id="module-form">
+          <input type="hidden" id="module-id">
+          <div class="form-group full-width">
+            <label for="module-title-input">Titre du Module / Semaine / Session</label>
+            <input type="text" id="module-title-input" required placeholder="Ex: Semaine 1 - Introduction">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-danger-outline" id="delete-module-btn" style="display: none;">
+          <i data-lucide="trash-2"></i> Supprimer
+        </button>
+        <div style="flex-grow: 1;"></div>
+        <button class="btn-secondary close-modal-btn">Annuler</button>
+        <button class="btn-primary" id="save-module-btn">Enregistrer</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. Guide / Mode d'emploi Modal -->
+  <div class="modal-backdrop" id="guide-modal">
+    <div class="modal-content" style="max-width: 800px; height: 85vh;">
+      <div class="modal-header">
+        <h2><i data-lucide="book-open"></i> Guide d'Utilisation & Méthodologies</h2>
+        <button class="btn-icon close-modal-btn"><i data-lucide="x"></i></button>
+      </div>
+      <div class="modal-body" style="padding: 0; height: calc(85vh - 120px); overflow: hidden;">
+        <div class="guide-layout">
+          <!-- Sidebar -->
+          <nav class="guide-sidebar">
+            <button type="button" class="guide-tab-btn active" data-tab="tab-usage">
+              <i data-lucide="help-circle"></i> 1. Outil
+            </button>
+            <button type="button" class="guide-tab-btn" data-tab="tab-abc">
+              <i data-lucide="compass"></i> 2. Méthode ABC
+            </button>
+            <button type="button" class="guide-tab-btn" data-tab="tab-activity">
+              <i data-lucide="activity"></i> 3. Engagement ICAP
+            </button>
+            <button type="button" class="guide-tab-btn" data-tab="tab-credits">
+              <i data-lucide="info"></i> 4. Licences
+            </button>
+          </nav>
+          
+          <!-- Content Panels -->
+          <div class="guide-content-panel">
+            <!-- 1. Utilisation de l'outil -->
+            <div class="guide-tab-panel active" id="tab-usage">
+              <h3>Comment utiliser cet outil de scénarisation</h3>
+              <p>Cet outil interactif vous permet de concevoir, d'analyser et d'équilibrer vos scénarios de formation. Voici comment l'utiliser :</p>
+              
+              <div class="guide-section">
+                <h4><i data-lucide="plus-circle" class="text-success"></i> Structurer votre cours</h4>
+                <ul>
+                  <li>Remplissez les <strong>Métadonnées</strong> de votre cours (nom, crédits ECTS, volume horaire, objectifs) dans le panneau supérieur pliable.</li>
+                  <li>Créez vos blocs temporels en cliquant sur <strong>Ajouter un Module / Semaine</strong>. Vous pouvez renommer ou supprimer chaque module en cliquant sur l'icône de stylo <i data-lucide="edit-2" style="width: 12px; height: 12px;"></i>.</li>
+                </ul>
+              </div>
+
+              <div class="guide-section">
+                <h4><i data-lucide="plus" class="text-accent"></i> Gérer les activités (Cartes)</h4>
+                <ul>
+                  <li>Cliquez sur <strong>Ajouter une activité</strong> au bas d'un module pour créer une carte d'activité.</li>
+                  <li>Sélectionnez un <strong>type d'apprentissage ABC</strong>, saisissez un titre, une durée (en minutes), les consignes, son <strong>niveau ICAP</strong>, le format (présentiel/distanciel), le rythme (synchrone/asynchrone), l'évaluation et les outils utilisés.</li>
+                  <li>Cliquez sur une carte existante pour la modifier ou la supprimer à tout moment.</li>
+                </ul>
+              </div>
+
+              <div class="guide-section">
+                <h4><i data-lucide="move" class="text-primary"></i> Organiser par Glisser-Déposer (Drag & Drop)</h4>
+                <ul>
+                  <li>Faites glisser une carte d'activité pour réordonner la séquence au sein d'un module ou pour la déplacer vers un autre module.</li>
+                  <li>La réorganisation met à jour instantanément les statistiques de votre tableau de bord.</li>
+                </ul>
+              </div>
+
+              <div class="guide-section">
+                <h4><i data-lucide="pie-chart" class="text-accent"></i> Analyser et exporter votre travail</h4>
+                <ul>
+                  <li>Le volet latéral droit calcule automatiquement la balance de votre cours et vous propose des <strong>conseils pédagogiques</strong> en temps réel.</li>
+                  <li>Chargez des modèles types (ex: Classe Inversée) via le bouton <strong>Modèles</strong>.</li>
+                  <li>Utilisez <strong>Exporter JSON</strong> pour sauvegarder votre travail dans un fichier, ou <strong>Importer JSON</strong> pour le recharger.</li>
+                  <li>Cliquez sur <strong>PDF / Imprimer</strong> pour générer une vue d'impression propre (format poster).</li>
+                </ul>
+              </div>
+            </div>
+            
+            <!-- 2. Méthode ABC Learning Design -->
+            <div class="guide-tab-panel" id="tab-abc">
+              <h3>La Méthode ABC Learning Design</h3>
+              <p>Conçue par Clive Young et Nataša Perović à l'<strong>UCL (University College London)</strong>, la méthode ABC Learning Design est une approche de scénarisation rapide et collaborative.</p>
+              <p>Elle s'appuie sur le <em>Conversational Framework</em> de Diana Laurillard, qui modélise l'apprentissage des étudiants en 6 types d'activités distinctes :</p>
+              
+              <div class="abc-guide-grid">
+                <div class="abc-guide-type-card type-acquisition">
+                  <h5>Acquisition</h5>
+                  <p>L'étudiant écoute une conférence, lit un texte, visionne une vidéo ou écoute un podcast. Posture d'assimilation d'informations.</p>
+                </div>
+                <div class="abc-guide-type-card type-investigation">
+                  <h5>Investigation</h5>
+                  <p>L'étudiant explore, cherche, compare et évalue des ressources documentaires ou des informations théoriques pour répondre à un questionnement.</p>
+                </div>
+                <div class="abc-guide-type-card type-discussion">
+                  <h5>Discussion</h5>
+                  <p>L'étudiant dialogue avec des pairs ou l'enseignant, confronte des perspectives et argumente ses idées (forum, classe virtuelle, débat).</p>
+                </div>
+                <div class="abc-guide-type-card type-practice">
+                  <h5>Pratique</h5>
+                  <p>L'étudiant applique ses connaissances à travers des exercices, des simulations, des travaux pratiques ou des laboratoires.</p>
+                </div>
+                <div class="abc-guide-type-card type-collaboration">
+                  <h5>Collaboration</h5>
+                  <p>Les étudiants travaillent ensemble en petits groupes pour co-créer un livrable commun, débattre et construire un projet partagé.</p>
+                </div>
+                <div class="abc-guide-type-card type-production">
+                  <h5>Production</h5>
+                  <p>L'étudiant synthétise et consolide ses acquis en créant un objet physique, numérique ou écrit (rapport, pitch, code, poster, vidéo).</p>
+                </div>
+              </div>
+              
+              <p style="margin-top: 15px;"><strong>Objectif :</strong> La visualisation sous forme de diagramme radar (Kiviat) permet d'ajuster le mix pédagogique du cours pour s'assurer qu'il n'est pas trop transmissif (sur-représentation de l'Acquisition) et qu'il propose une variété d'activités engageantes.</p>
+            </div>
+            
+            <!-- 3. Le Modèle d'Engagement ICAP -->
+            <div class="guide-tab-panel" id="tab-activity">
+              <h3>Le Modèle d'Engagement Cognitif ICAP</h3>
+              <p>Développé par Michelene Chi et Rebekah Wylie (2014), le modèle ICAP classifie le niveau d'engagement de l'étudiant en quatre niveaux d'activité cognitive décroissants.</p>
+              <p>Plus l'activité proposée incite à un niveau d'engagement élevé, plus l'apprentissage est profond et pérenne :</p>
+              
+              <div class="icap-guide-list">
+                <div class="icap-guide-item level-i">
+                  <div class="icap-badge-pill level-i">I</div>
+                  <div class="icap-guide-item-text">
+                    <h5>Interactif (Interactive)</h5>
+                    <p><strong>Activité :</strong> Co-construction de connaissances avec un pair (débat en binôme, écriture collaborative sur un wiki, relecture et feedback croisé).</p>
+                    <p class="icap-outcome">🧠 <em>Bénéfice :</em> Apprentissage en profondeur optimal par le dialogue et l'intégration mutuelle des points de vue.</p>
+                  </div>
+                </div>
+                
+                <div class="icap-guide-item level-c">
+                  <div class="icap-badge-pill level-c">C</div>
+                  <div class="icap-guide-item-text">
+                    <h5>Constructif (Constructive)</h5>
+                    <p><strong>Activité :</strong> Production autonome générant de nouvelles informations au-delà de ce qui est fourni (créer une carte heuristique, rédiger un résumé personnel, formuler ses propres questions, coder un projet).</p>
+                    <p class="icap-outcome">🧠 <em>Bénéfice :</em> Compréhension en profondeur par l'intégration et la reformulation active de la théorie.</p>
+                  </div>
+                </div>
+                
+                <div class="icap-guide-item level-a">
+                  <div class="icap-badge-pill level-a">A</div>
+                  <div class="icap-guide-item-text">
+                    <h5>Actif (Active)</h5>
+                    <p><strong>Activité :</strong> Manipulation physique ou comportementale ciblée du contenu (prendre des notes linéaires en cours, faire un quiz QCM simple, mettre en pause une vidéo pour surligner un passage).</p>
+                    <p class="icap-outcome">🧠 <em>Bénéfice :</em> Mémorisation superficielle et maintien de l'attention.</p>
+                  </div>
+                </div>
+                
+                <div class="icap-guide-item level-p">
+                  <div class="icap-badge-pill level-p">P</div>
+                  <div class="icap-guide-item-text">
+                    <h5>Passif (Passive)</h5>
+                    <p><strong>Activité :</strong> Réception simple d'informations sans action physique ou mentale exigée (écouter un cours d'amphithéâtre, lire un document sans prendre de notes, regarder une vidéo d'une traite).</p>
+                    <p class="icap-outcome">🧠 <em>Bénéfice :</em> Stockage temporaire d'informations, fort risque d'oubli rapide.</p>
+                  </div>
+                </div>
+              </div>
+              
+              <p style="margin-top: 15px;"><strong>Dans cet outil :</strong> L'agrégation ICAP vous aide à surveiller la proportion d'activités Passives et Actives afin d'y ajouter des phases Constructives ou Interactives propices aux apprentissages complexes.</p>
+            </div>
+            
+            <!-- 4. Licences & Crédits -->
+            <div class="guide-tab-panel" id="tab-credits">
+              <h3>Licences & Crédits de Référence</h3>
+              
+              <div class="guide-section">
+                <h4>Méthode ABC Learning Design</h4>
+                <p>La méthode <strong>ABC Learning Design</strong> a été développée par Clive Young et Nataša Perović au sein de l'UCL Learning Technology Suite (University College London).</p>
+                <p>Tous les modèles et ressources ABC LD originaux sont distribués sous la licence internationale <strong>Creative Commons Attribution - Pas d’Utilisation Commerciale - Partage dans les Mêmes Conditions 4.0 (CC BY-NC-SA 4.0)</strong>.</p>
+                <p>Pour en savoir plus et télécharger les trousses à outils physiques, visitez : <a href="https://abc-ld.org/" target="_blank" style="color: var(--primary-color);">abc-ld.org</a>.</p>
+              </div>
+
+              <div class="guide-section">
+                <h4>Modèle d'Engagement ICAP</h4>
+                <p>Le cadre théorique ICAP a été formulé par Michelene T.H. Chi et Rebekah Wylie dans leur publication fondatrice :</p>
+                <blockquote style="border-left: 3px solid var(--border-color); padding-left: 10px; margin: 10px 0; font-style: italic; font-size: 0.8rem; color: var(--text-muted);">
+                  Chi, M. T., & Wylie, R. (2014). The ICAP framework: Linking cognitive engagement to active learning outcomes. Educational Psychologist, 49(4), 219-243.
+                </blockquote>
+              </div>
+
+              <div class="guide-section">
+                <h4>Crédits de l'Application</h4>
+                <p style="margin-bottom: 8px;"><strong>Conception :</strong> Pascal Pagny (<a href="mailto:pascal.pagny@ac-paris.fr" style="color: var(--primary-color);">pascal.pagny@ac-paris.fr</a>)</p>
+                <p>Cette application interactive a été conçue comme un outil d'accompagnement numérique ouvert pour les enseignants, ingénieurs et concepteurs pédagogiques.</p>
+                <p>Elle est développée en technologies web standard (HTML, Vanilla CSS, Vanilla JS) sans dépendance tierce, et peut être hébergée localement, distribuée ou modifiée librement à des fins non-commerciales.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <div style="flex-grow: 1;"></div>
+        <button class="btn-primary close-modal-btn">Fermer le guide</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- App Core Scripts -->
+  <script src="src/utils/templates.js"></script>
+  <script src="src/utils/charts.js"></script>
+  <script src="src/app.js"></script>
+</body>
+</html>
